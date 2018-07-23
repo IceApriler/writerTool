@@ -17,7 +17,11 @@ class Mount {
     }
     if (process.env.NODE_ENV === 'development') {
       // 开发环境将数据库放在项目的根目录下
-      this.STORE_PATH = ''
+      this.STORE_PATH = './data'
+      if (!fse.pathExistsSync(this.STORE_PATH)) {
+        fse.mkdirpSync(this.STORE_PATH)
+      }
+      console.log(path.join(this.STORE_PATH, 'dbName' + '.json'))
     }
   }
   /**

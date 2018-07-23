@@ -1,0 +1,41 @@
+{
+  "user": {},
+  "bookList": [
+    {
+      "fileName": 1532276976944,
+      "bookName": "仙武帝尊",
+      "bookFullName": "仙武帝尊.txt",
+      "path": "/Users/april/myFile/novel/仙武帝尊.txt",
+      "index": 0,
+      "id": "9fef3901-fa38-486a-9fa2-1c323a95bfe5",
+      "characterNumber": 5669260
+    },
+    {
+      "fileName": 1532278436991,
+      "bookName": "牧神记",
+      "bookFullName": "牧神记.txt",
+      "path": "/Users/april/Downloads/牧神记.txt",
+      "index": 2,
+      "id": "98a79b38-c25d-40b2-9a04-ab9f35143237",
+      "characterNumber": 3053663
+    },
+    {
+      "fileName": 1532283194321,
+      "bookName": "《雪中悍刀行》（校对版全本）作者：烽火戏诸侯",
+      "bookFullName": "《雪中悍刀行》（校对版全本）作者：烽火戏诸侯.txt",
+      "path": "/Users/april/Downloads/《雪中悍刀行》（校对版全本）作者：烽火戏诸侯.txt",
+      "index": 920,
+      "id": "59a49a1e-3d88-4703-a531-6c725469b0df",
+      "characterNumber": 5536202
+    },
+    {
+      "fileName": 1532331346395,
+      "bookName": "七界传说1-12卷重新整理",
+      "bookFullName": "七界传说1-12卷重新整理.txt",
+      "path": "/Users/april/myFile/novel/新建文件夹1/七界传说1-12卷重新整理.txt",
+      "index": 0,
+      "id": "72b287ce-cb99-44f8-8d52-a55ab418a96f",
+      "characterNumber": 4124021
+    }
+  ]
+}
