@@ -1,0 +1,41 @@
+{
+  "user": {},
+  "bookList": [
+    {
+      "fileName": 1532271376545,
+      "bookName": "仙武帝尊的副本",
+      "bookFullName": "仙武帝尊的副本.txt",
+      "path": "/Users/april/myFile/novel/仙武帝尊的副本.txt",
+      "index": 7,
+      "id": "1f092fa7-3004-4eff-9dc2-cfdcf2a1c59a",
+      "characterNumber": 248858
+    },
+    {
+      "fileName": 1532276976944,
+      "bookName": "仙武帝尊",
+      "bookFullName": "仙武帝尊.txt",
+      "path": "/Users/april/myFile/novel/仙武帝尊.txt",
+      "index": 0,
+      "id": "9fef3901-fa38-486a-9fa2-1c323a95bfe5",
+      "characterNumber": 5669260
+    },
+    {
+      "fileName": 1532278436991,
+      "bookName": "牧神记",
+      "bookFullName": "牧神记.txt",
+      "path": "/Users/april/Downloads/牧神记.txt",
+      "index": 2,
+      "id": "98a79b38-c25d-40b2-9a04-ab9f35143237",
+      "characterNumber": 3053663
+    },
+    {
+      "fileName": 1532283194321,
+      "bookName": "《雪中悍刀行》（校对版全本）作者：烽火戏诸侯",
+      "bookFullName": "《雪中悍刀行》（校对版全本）作者：烽火戏诸侯.txt",
+      "path": "/Users/april/Downloads/《雪中悍刀行》（校对版全本）作者：烽火戏诸侯.txt",
+      "index": 918,
+      "id": "59a49a1e-3d88-4703-a531-6c725469b0df",
+      "characterNumber": 5536202
+    }
+  ]
+}
