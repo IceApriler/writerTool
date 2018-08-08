@@ -108,7 +108,7 @@ export default {
       console.log('delete')
       this.$Modal.confirm({
         title: '删除书籍',
-        content: `你确定要删除${item.bookName}吗？这将删除${item.fileName}的所有记录...`,
+        content: `你确定要删除 <${item.bookName}> 吗？`,
         width: 500,
         onOk: () => {
           this.$db.deleteDB(item.fileName)

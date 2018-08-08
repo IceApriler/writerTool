@@ -336,7 +336,7 @@ export default {
     updateTitle (data) {
       const guide = this.getGuide(data.guide)
       this.value = this.$db.db('data').get(`${guide.target}.title`).value()
-      this.inputModal().then(res => {
+      this.inputModal('修改').then(res => {
         if (res.status) {
           // 更新数据和节点
           this.$db.db('data').set(`${guide.target}.title`, res.value).write()

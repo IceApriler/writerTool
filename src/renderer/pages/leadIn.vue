@@ -47,21 +47,6 @@
             <div class="hint"
                  v-else>导入 {{bookFullName}} 成功</div>
           </div>
-          <Progress :percent="percent">
-            <Icon type="checkmark-circled"></Icon>
-            <span>{{ percent }}%</span>
-          </Progress>
-          <div class="progressTs">
-            <div class="line">
-              <div :style="{width: percent+'%'}"></div>
-            </div>
-            <div class="percent">
-              <!-- v-show="percent === 100" -->
-              <Icon type="checkmark-circled"
-                    v-show="percent === 100"></Icon>
-              <span>{{ percent }}%</span>
-            </div>
-          </div>
         </Card>
       </content>
     </Layout>
@@ -281,7 +266,7 @@ export default {
   }
   .top {
     position: absolute;
-    top: 200px;
+    top: 10vh;
     width: 68vw;
   }
   .content {
@@ -314,35 +299,10 @@ export default {
     }
     .circleWrap {
       padding: 20px 140px;
+      text-align: center;
       .hint {
         margin-top: 20px;
         text-align: center;
-      }
-    }
-    .progressTs {
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      > .line {
-        flex: 1;
-        height: 14px;
-        padding: 2px 0;
-        background-color: #f3f3f3;
-        border-radius: 20px;
-        overflow: hidden;
-        > div {
-          height: 100%;
-          background-color: #2db7f5;
-          transition: width 0.2s ease;
-        }
-      }
-      > .percent {
-        width: 45px;
-        margin-left: 8px;
-        font-size: 12px;
       }
     }
   }
