@@ -42,6 +42,11 @@ export default new Router({
           path: 'reader',
           name: 'reader',
           component: require('@/pages/reader').default
+        },
+        {
+          path: 'collection',
+          name: 'collection',
+          component: require('@/pages/collection').default
         }
       ]
     }

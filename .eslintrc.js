@@ -12,10 +12,8 @@ module.exports = {
   globals: {
     __static: true
   },
-  plugins: [
-    'html'
-  ],
-  'rules': {
+  plugins: ['html'],
+  rules: {
     // allow paren-less arrow functions
     'arrow-parens': 0,
     // allow async-await
