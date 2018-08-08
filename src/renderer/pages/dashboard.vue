@@ -13,7 +13,7 @@
               :class="menuitemClasses">
           <router-link to="/home">
             <MenuItem name="home">
-            <Icon type="home"></Icon>
+            <Icon type="md-home" />
             <span>首页</span>
             </MenuItem>
           </router-link>
@@ -25,7 +25,7 @@
           </router-link>
           <router-link to="/dashboard/bookList">
             <MenuItem name="bookList">
-            <Icon type="social-buffer"></Icon>
+            <Icon type="md-albums" />
             <span>书架</span>
             </MenuItem>
           </router-link>
@@ -33,6 +33,12 @@
             <MenuItem name="reader">
             <Icon type="ios-book"></Icon>
             <span>阅读</span>
+            </MenuItem>
+          </router-link>
+          <router-link to="/dashboard/collection">
+            <MenuItem name="collection">
+            <Icon type="logo-buffer" />
+            <span>收集</span>
             </MenuItem>
           </router-link>
           <router-link to="/dashboard/demo">

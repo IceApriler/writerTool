@@ -161,7 +161,7 @@ export default {
           }
           this.bookFullName = book.bookFullName
           // 更新data总表
-          this.$db.db('data').defaults({ user: {}, bookList: [] }).get('bookList').insert(book).write()
+          this.$db.db('data').defaults({ user: {}, bookList: [] }).get('bookList').push(Object.assign({ id: this.$sid.generate() }, book)).write()
           // 新建书籍表
           this.$db.db(this.fileName).defaults({ sections: [] }).write()
         },
@@ -181,7 +181,7 @@ export default {
         },
         complete: (res) => {
           console.log('complete')
-          this.$db.db(this.fileName).get('sections').insert(Object.assign({}, this.chapter)).write()
+          this.$db.db(this.fileName).get('sections').push(Object.assign({ id: this.$sid.generate() }, this.chapter)).write()
           this.$db.db('data').get('bookList').find({ fileName: this.fileName }).set('characterNumber', this.characterNumber).write()
           const diff = new Date().getTime() - this.fileName
           if (diff > 2000) {
@@ -221,7 +221,7 @@ export default {
         if (item.match(reg)) {
           // 若是chapter有数据，说明是完整的一章，需要先将其存入数据库，然后置空chapter
           if (chapter.content.length) {
-            this.$db.db(this.fileName).get('sections').insert(Object.assign({}, chapter)).write()
+            this.$db.db(this.fileName).get('sections').push(Object.assign({ id: this.$sid.generate() }, chapter)).write()
             chapter = {
               title: '',
               content: []

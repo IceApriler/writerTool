@@ -10,19 +10,18 @@
           <Card>
             <p slot="title">{{item.bookName}}</p>
             <div class="imgWrap">
-              <img src="@/assets/bg-book-default.png"
+              <img src="../assets/bg-book-default.png"
                    alt="">
             </div>
             <div class="footer">{{item.characterNumber}} 字</div>
           </Card>
           <div class="btn-box">
-            <Button type="ghost"
-                    class="read"
+            <Button class="read"
                     icon="ios-search"
                     @click="openBook(item)">打开</Button>
             <div @click="deletBook(item)">
-              <Icon type="trash-a"
-                    class="delete"></Icon>
+              <Icon type="ios-trash"
+                    class="delete" />
             </div>
           </div>
         </div>

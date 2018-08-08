@@ -3,7 +3,7 @@
        ref="homeContainer">
     <div class="info">
       <div class="title">
-        <Icon type="fireball"></Icon>
+        <Icon type="md-flame" />
         <span>WriterTool</span>
       </div>
       <div class="intoduction">

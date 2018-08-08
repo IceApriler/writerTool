@@ -2,46 +2,17 @@
   <div class="reader"
        ref="reader">
     <Layout class="container">
-      <Content class="bookList"
-               :style="{ height: '100vh' }"
-               v-if="false">
-        <Tabs type="card"
-              closable
-              :value="currentBookId"
-              @on-click="handleTabPaneClick"
-              @on-tab-remove="handleTabRemove">
-          <TabPane class="pane"
-                   :label="item.bookName"
-                   :name="item.id"
-                   v-for="item in readerBooks"
-                   :key="'reader'+item.id"
-                   v-if="item && item.id">
-            <Scroll class="scroll"
-                    height="100%"
-                    :on-reach-bottom="handleReachBottom"
-                    :ref="item.id+item.index+'section'">
-              <div class="section"
-                   v-for="section in item.sectionList">
-                <p v-for="(paragraph, p_i) in section.content">{{paragraph}}</p>
-              </div>
-            </Scroll>
-          </TabPane>
-          <Button type="ghost"
-                  @click="handleTabsAdd"
-                  size="small"
-                  slot="extra">增加</Button>
-        </Tabs>
-      </Content>
-      <Content class="bookList"
-               v-else>
-        <div class="waterfall">
+      <Content class="bookList">
+        <div class="waterfall"
+             ref="waterfall">
           <div class="inner"
                v-for="item in readerBooks">
             <div class="scroll">
               <div class="section"
                    v-for="section in item.sectionList"
                    v-if="item.sectionList.length">
-                <p v-for="(paragraph, p_i) in section.content">{{paragraph}}</p>
+                <p v-for="(paragraph, p_i) in section.content">
+                  <span :id="'paragraph'+p_i"></span>{{paragraph}}</p>
               </div>
             </div>
           </div>
@@ -52,22 +23,22 @@
         <content class="nav">
           <ul>
             <li @click="bookCatelogToggle">
-              <Icon type="navicon-round"></Icon>
+              <Icon type="md-reorder" />
             </li>
             <li>
-              <Icon type="arrow-expand"
-                    v-if="true"></Icon>
-              <Icon type="arrow-shrink"
-                    v-else></Icon>
+              <Icon type="md-expand"
+                    v-if="true" />
+              <Icon type="md-contract"
+                    v-else />
             </li>
             <li>
-              <Icon type="gear-b"></Icon>
+              <Icon type="md-settings" />
             </li>
             <li @click="lastSection">
-              <Icon type="arrow-up-a"></Icon>
+              <Icon type="md-arrow-round-up" />
             </li>
             <li @click="nextSection">
-              <Icon type="arrow-down-a"></Icon>
+              <Icon type="md-arrow-round-down" />
             </li>
           </ul>
         </content>
@@ -97,13 +68,16 @@
 import { mapActions, mapState } from 'vuex'
 export default {
   name: 'reader',
-  components: {},
+  components: {
+
+  },
   data () {
     return {
       cbid: null,
       index: 0,
       bookCatelog: [],
-      showBookCatelog: false
+      showBookCatelog: false,
+      selectText: ''
     }
   },
   computed: {
@@ -270,10 +244,24 @@ export default {
         }
       })
     },
+    getSelection () {
+      const selector = window.getSelection()
+      return {
+        selectText: selector.toString(),
+        parentNode: selector.anchorNode.parentNode
+      }
+    },
+    mouseup () {
+      const { selectText } = this.getSelection()
+      if (selectText && selectText !== this.selectText) {
+        this.selectText = selectText
+      }
+    },
     /**
      * 入口
      */
     entry () {
+      this.$refs.waterfall.addEventListener('mouseup', this.mouseup, true)
       if (this.readerBooks.length) {
         setTimeout(() => {
           this.readerBooks.map(item => {
@@ -390,15 +378,22 @@ export default {
               font-size: 17px;
               line-height: 30px;
               padding: 5px 0;
-              font-family: 'Helvetica Neue', Helvetica, 'PingFang SC',
-                'Hiragino Sans GB', 'Microsoft YaHei', '\5FAE\8F6F\96C5\9ED1',
-                Arial, sans-serif;
+              position: relative;
               &:first-child {
                 text-indent: inherit;
                 text-align: center;
                 font-size: 25px;
                 font-weight: 600;
                 padding: 10px;
+              }
+              .selected {
+                position: absolute;
+                top: -40px;
+                left: 0;
+                // width: 100px;
+                height: 40px;
+                background-color: #fff;
+                color: #000;
               }
             }
           }
