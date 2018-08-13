@@ -261,7 +261,8 @@ export default {
         let guide = this.getGuide(data.guide)
         this.$db.db('data').get(guide.target).defaults({ content: [] }).get('content').push({
           id: this.$sid.generate(),
-          title: res.value
+          title: res.value,
+          level: 'catalog'
         }).write()
         // 更新节点
         this.renderContent()

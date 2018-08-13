@@ -215,6 +215,7 @@ export default {
      * 打开新的一章，跳章
      */
     newlySection (item) {
+      this.index = item.index
       const section = this.$db.db(this.currentBook.fileName).get(`sections[${item.index}]`).value()
       this.newlyReaderBooksSection({
         id: this.currentBook.id,
@@ -244,6 +245,9 @@ export default {
         }
       })
     },
+    /**
+     * 读取选中的文本
+     */
     getSelection () {
       const selector = window.getSelection()
       return {
@@ -251,11 +255,19 @@ export default {
         parentNode: selector.anchorNode.parentNode
       }
     },
+    /**
+     * 监听mouseup
+     */
     mouseup () {
       const { selectText } = this.getSelection()
       if (selectText && selectText !== this.selectText) {
         this.selectText = selectText
+        console.log(selectText)
+        this.openWorkSpace()
       }
+    },
+    openWorkSpace () {
+
     },
     /**
      * 入口
