@@ -17,6 +17,19 @@
             </div>
           </div>
         </div>
+        <DragableBox class="dragableBox"
+                     :width="600"
+                     v-show="showDragbleBox">
+          <div class="inputWrap">
+            <Input v-model="selectText"
+                   type="textarea"
+                   :autosize="true"
+                   placeholder="Enter something..." />
+          </div>
+          <div class="treeWrap">
+            <Collection :selectText="selectText"></Collection>
+          </div>
+        </DragableBox>
       </Content>
       <div :class="{leftFloatBar: true, isCollapsed: isCollapsed}"
            v-if="readerBooks.length">
@@ -66,10 +79,14 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import DragableBox from '@/components/dragableBox.vue'
+import Collection from '@/components/collection.vue'
+
 export default {
   name: 'reader',
   components: {
-
+    DragableBox,
+    Collection
   },
   data () {
     return {
@@ -77,7 +94,9 @@ export default {
       index: 0,
       bookCatelog: [],
       showBookCatelog: false,
-      selectText: ''
+      selectText: '',
+      showDragbleBox: false,
+      rootData: []
     }
   },
   computed: {
@@ -264,10 +283,15 @@ export default {
         this.selectText = selectText
         console.log(selectText)
         this.openWorkSpace()
+      } else {
+        this.closeWorkSpace()
       }
     },
     openWorkSpace () {
-
+      this.showDragbleBox = true
+    },
+    closeWorkSpace () {
+      this.showDragbleBox = false
     },
     /**
      * 入口
@@ -409,6 +433,35 @@ export default {
               }
             }
           }
+        }
+      }
+      .dragableBox {
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 999;
+        height: 100vh;
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        background: linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0.6),
+          rgba(255, 255, 255, 1),
+          rgba(255, 255, 255, 1),
+          rgba(255, 255, 255, 1)
+        );
+        box-shadow: -4px 0 8px rgba(0, 0, 0, 0.12);
+        .inputWrap {
+          width: 70%;
+          padding: 20px 0;
+        }
+        .treeWrap {
+          flex: 1;
+          width: 100%;
+          overflow-y: scroll;
+          overflow-x: scroll;
         }
       }
     }

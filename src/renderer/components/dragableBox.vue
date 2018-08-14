@@ -3,6 +3,7 @@
        ref="content"
        :style="contentStyles"
        @mousedown="handleMoveStart">
+    <slot></slot>
   </div>
 </template>
 
@@ -40,7 +41,7 @@ export default {
       Object.assign(style, styleWidth)
 
       return style
-    },
+    }
   },
   methods: {
     handleMoveStart (event) {
@@ -52,7 +53,7 @@ export default {
       const distance = {
         x: event.clientX,
         y: event.clientY
-      };
+      }
 
       this.dragData.dragX = distance.x
       this.dragData.dragY = distance.y
@@ -69,13 +70,13 @@ export default {
         y: event.clientY
       }
 
-      const diff_distance = {
+      const diffDistance = {
         x: distance.x - this.dragData.dragX,
         y: distance.y - this.dragData.dragY
       }
 
-      this.dragData.x += diff_distance.x
-      this.dragData.y += diff_distance.y
+      this.dragData.x += diffDistance.x
+      this.dragData.y += diffDistance.y
 
       this.dragData.dragX = distance.x
       this.dragData.dragY = distance.y
