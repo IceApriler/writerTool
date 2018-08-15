@@ -24,34 +24,31 @@ export default {
         type: 'default',
         size: 'small'
       },
-      tagProps: {
+      catalogTagProps: {
         type: 'border',
         color: 'default'
+      },
+      bodyTagProps: {
+        type: 'border',
+        color: 'primary',
+        closable: true
       },
       moveTagData: null
     }
   },
   computed: {
-    /**
-     * tag的颜色
-     */
-    tagColor () {
-      return (tagId) => {
-        let color = this.tagProps.color
-        // 自定义颜色
-        // ...
-        return color
-      }
-    }
+
   },
   methods: {
     /**
      * 渲染树根节点的格式和数据
      * title <String>
      * content <Array>
+     * id <String>
+     * level <String> catalog & body
      */
     renderRoot (collection, rootData = 'rootData') {
-      let { title, content, id } = collection
+      let { title, content, id, level } = collection
       let guide = []
       this[rootData] = [
         {
@@ -59,6 +56,7 @@ export default {
           expand: true,
           guide: guide,
           id: id,
+          level: level,
           /**
            * root <Array>：树的根节点
            * node <Object>：当前节点
@@ -85,9 +83,7 @@ export default {
                       }
                     }),
                     h('Tag', {
-                      props: Object.assign({}, this.tagProps, {
-                        color: this.tagColor(data.id)
-                      })
+                      props: Object.assign({}, this.catalogTagProps)
                     }, data.title)
                   ])
               ])
@@ -112,6 +108,7 @@ export default {
           expand: true,
           guide: _guide,
           id: item.id,
+          level: item.level,
           children: item.content ? this.setChildren(item.content, _guide) : null,
           idEnd: item.content === undefined || item.content.length === 0
         })
@@ -136,7 +133,11 @@ export default {
           h('span',
             {
               on: {
-                '!click': () => { this.tagClick(data) }
+                '!click': () => {
+                  if (data.level === 'catalog') {
+                    this.tagClick(data)
+                  }
+                }
               }
             },
             [
@@ -148,11 +149,15 @@ export default {
                   marginRight: '3px'
                 }
               }),
-              h('Tag', {
-                props: Object.assign({}, this.tagProps, {
-                  color: this.tagColor(data.id)
-                })
-              }, data.title)
+              h('Tag',
+                {
+                  on: {
+                    'on-close': (e) => {
+                      this.remove(data)
+                    }
+                  },
+                  props: Object.assign({}, data.level === 'catalog' ? this.catalogTagProps : this.bodyTagProps)
+                }, data.title)
             ])
         ])
     },
@@ -160,52 +165,26 @@ export default {
      * 添加子节点
      */
     append (data) {
-      this.inputModal('新增').then(res => {
-        if (!res.status) {
-          return false
-        } else if (res.status && !res.value.trim()) {
-          this.$Message.error({
-            content: '写入失败！内容不能为空',
-            duration: 5,
-            closable: true
-          })
-          return false
-        }
-        // const children = data.children || []
-        // guide 为当前数据所在路径
-        let guide = this.getGuide(data.guide)
-        this.$db.db('data').get(guide.target).defaults({ content: [] }).get('content').push({
-          id: this.$sid.generate(),
-          title: res.value,
-          level: 'catalog'
-        }).write()
-        // 更新节点
-        this.renderContent()
-        // data.idEnd = false
-        // children.push({
-        //   title: res.value,
-        //   expand: true,
-        //   guide: [...data.guide, children.length],
-        //   idEnd: true
-        // })
-        // this.$set(data, 'children', children)
-      })
+      // guide 为当前数据所在路径
+      let guide = this.getGuide(data.guide)
+      this.$db.db('data').get(guide.target).defaults({ content: [] }).get('content').push({
+        id: this.$sid.generate(),
+        title: this.selectText,
+        level: 'body'
+      }).write()
+      // 更新节点
+      this.renderContent()
     },
     /**
      * 移除子节点
      */
-    remove (root, node, data) {
+    remove (data) {
       this.normalModal('删除', `你确定要删除 “${data.title}” 吗？`).then(res => {
         if (res.status) {
           let guide = this.getGuide(data.guide)
           this.$db.db('data').get(`${guide.parent}.content`).remove((item, index) => {
             return guide.index === index
           }).write()
-          // const parentKey = root.find(el => el === node).parent
-          // const parent = root.find(el => el.nodeKey === parentKey).node
-          // const index = parent.children.indexOf(data)
-          // console.log(root, parent, parent.children, index)
-          // parent.children.splice(index, 1)
           // 更新节点
           this.renderContent()
         }
@@ -217,7 +196,7 @@ export default {
     tagClick (data) {
       // 有选中文本
       if (this.selectText.length) {
-
+        this.append(data)
       }
     },
     /**
@@ -240,6 +219,28 @@ export default {
         }
       }
       return res
+    },
+    /**
+     * 标准confirm-modal
+     */
+    normalModal (title, content) {
+      return new Promise((resolve) => {
+        this.$Modal.confirm({
+          title: title,
+          okText: '确定',
+          content: content,
+          onOk: () => {
+            resolve({
+              status: true
+            })
+          },
+          onCancel: () => {
+            resolve({
+              status: false
+            })
+          }
+        })
+      })
     },
     /**
      * Deep diff between two object, using lodash
@@ -277,7 +278,8 @@ export default {
       // 生成 addRootData
       this.renderRoot(add, 'addRootData')
       const delTheItem = (data) => {
-        data.map(item => {
+        // 需要倒序删除删除
+        data.reverse().map(item => {
           // 这里需要考虑的是，用户del和update数据时的情况。
           // del是直接del一个数组中的某一项，所以在delRootData中的表现是某数组新增了一项。
           if (item.title) {
@@ -292,11 +294,11 @@ export default {
               const delIndex = guide.splice(guide.length - 1, 1)[0]
               const target = `children[${guide.join('].children[')}]`
               const delItem = this.evil(`function(){ return this.rootData[0].${target}.children.splice(${delIndex}, 1) }`).call(this)
-              console.log('del', delItem)
+              console.log('del1', delItem)
             } else {
-              const target = `children[${guide.join('].children[')}]`
-              const delItem = this.evil(`function(){ return this.rootData[0].${target}.children.splice(0, 1) }`).call(this)
-              console.log('del', delItem)
+              const delIndex = guide.splice(guide.length - 1, 1)[0]
+              const delItem = this.evil(`function(){ return this.rootData[0].children.splice(${delIndex}, 1) }`).call(this)
+              console.log('del2', delItem)
             }
           } else {
             // 无title，继续遍历children
@@ -331,14 +333,14 @@ export default {
                         }`).call(this, item)
               console.log('add', item)
             } else {
-              const target = `children[${guide.join('].children[')}]`
+              const addIndex = guide.splice(guide.length - 1, 1)[0]
+              console.log(addIndex)
               this.evil(`function(item){
-                          console.log('==2', item)
-                          if( this.rootData[0].${target}.children ) { 
-                            return this.rootData[0].${target}.children.splice(0, 0, item) 
+                          if( this.rootData[0].children ) { 
+                            return this.rootData[0].children.splice(${addIndex}, 0, item) 
                           } else {
-                            this.rootData[0].${target}.children = []
-                            return this.rootData[0].${target}.children.splice(0, 0, item) 
+                            this.rootData[0].children = []
+                            return this.rootData[0].children.splice(${addIndex}, 0, item) 
                           } 
                         }`).call(this, item)
               console.log('add', item)

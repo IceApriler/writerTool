@@ -60,155 +60,43 @@
     "title": "根目录",
     "content": [
       {
-        "id": "fH1_0Fcc7",
-        "title": "阅读采集",
+        "id": "MXm50PnBb",
+        "title": "1",
+        "level": "catalog",
         "content": [
           {
-            "id": "sz1cgZ-KD",
-            "title": "词语、短语、好句收集",
-            "content": [
-              {
-                "id": "kbVhjsfaD",
-                "title": "神态(面部五官，表情)",
-                "content": [
-                  {
-                    "id": "0cgGyPjCf",
-                    "title": "表情"
-                  },
-                  {
-                    "id": "CdyjATfzD",
-                    "title": "眼神"
-                  },
-                  {
-                    "id": "F0os2f0B8",
-                    "title": "其他"
-                  }
-                ]
-              },
-              {
-                "id": "jbj3Gbzgz",
-                "title": "心理",
-                "content": [
-                  {
-                    "id": "E_sKgjHdq",
-                    "title": "反应"
-                  },
-                  {
-                    "id": "gWreqpMqK",
-                    "title": "感受"
-                  },
-                  {
-                    "id": "w_zanGmj2",
-                    "title": "其他"
-                  }
-                ]
-              },
-              {
-                "id": "oyhnFH9f6",
-                "title": "动作(包含动词)",
-                "content": [
-                  {
-                    "id": "L1aZr4mfZ",
-                    "title": "言、说、道"
-                  },
-                  {
-                    "id": "DmFs48-KW",
-                    "title": "攻击"
-                  },
-                  {
-                    "id": "nhCPngTti",
-                    "title": "防御"
-                  },
-                  {
-                    "id": "IokMJGJ38",
-                    "title": "中性"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "id": "RYra4iUUH",
-            "title": "世界架构，设定收集",
-            "content": [
-              {
-                "id": "Es97sp7gk",
-                "title": "世界观"
-              },
-              {
-                "id": "UfKy91dkj",
-                "title": "规则"
-              },
-              {
-                "id": "QnE3z-_2v",
-                "title": "势力、组织"
-              },
-              {
-                "id": "mPQ3VV1Av",
-                "title": "职业行业-三百六十行"
-              },
-              {
-                "id": "NOu9AbgvN",
-                "title": "地理、秘境"
-              },
-              {
-                "id": "Qc60XbKjV",
-                "title": "功法、武技"
-              }
-            ]
-          },
-          {
-            "id": "eozI9we75",
-            "title": "专业知识",
-            "content": [
-              {
-                "id": "VT89ZP1l7",
-                "title": "医学"
-              }
-            ]
+            "id": "rRbjcweaq",
+            "title": "立冬过后小雪来",
+            "level": "body"
           }
         ]
       },
       {
-        "id": "NqD3oP4TE",
-        "title": "灵感速记",
-        "content": []
-      },
-      {
-        "id": "zTPwWKRpG",
-        "title": "第三",
+        "id": "JYWPwtYsy",
+        "title": "2",
+        "level": "catalog",
         "content": [
           {
-            "id": "fSciyq8ml",
-            "title": "test-01",
-            "content": [
-              {
-                "id": "hKPYBNmKq",
-                "title": "test-0103",
-                "content": [
-                  {
-                    "id": "9ZD_d9MI0",
-                    "title": "11122"
-                  }
-                ]
-              },
-              {
-                "id": "jIk_CyEQf",
-                "title": "test-090901",
-                "content": [
-                  {
-                    "id": "B3_EeQrhb",
-                    "title": "t-0104",
-                    "content": []
-                  }
-                ]
-              }
-            ]
+            "id": "uFCuAFBXH",
+            "title": "棠蕉两种",
+            "level": "body"
+          }
+        ]
+      },
+      {
+        "id": "KNCbu8wY-",
+        "title": "3",
+        "level": "catalog",
+        "content": [
+          {
+            "id": "IDrOeakwE",
+            "title": "棠蕉两种",
+            "level": "body"
           },
           {
-            "id": "njrNGsz_S",
-            "title": "test-02",
-            "content": []
+            "id": "hz9cwdw5f",
+            "title": "花魁鱼幼薇安定下来，住在一个一夜间被植入棠蕉两种植物的幽静院子",
+            "level": "body"
           }
         ]
       }

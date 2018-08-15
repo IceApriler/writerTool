@@ -481,7 +481,8 @@ export default {
       // 生成 addRootData
       this.renderRoot(add, 'addRootData')
       const delTheItem = (data) => {
-        data.map(item => {
+        // 需要倒序删除删除
+        data.reverse().map(item => {
           // 这里需要考虑的是，用户del和update数据时的情况。
           // del是直接del一个数组中的某一项，所以在delRootData中的表现是某数组新增了一项。
           if (item.title) {
@@ -496,11 +497,11 @@ export default {
               const delIndex = guide.splice(guide.length - 1, 1)[0]
               const target = `children[${guide.join('].children[')}]`
               const delItem = this.evil(`function(){ return this.rootData[0].${target}.children.splice(${delIndex}, 1) }`).call(this)
-              console.log('del', delItem)
+              console.log('del1', delIndex, delItem)
             } else {
-              const target = `children[${guide.join('].children[')}]`
-              const delItem = this.evil(`function(){ return this.rootData[0].${target}.children.splice(0, 1) }`).call(this)
-              console.log('del', delItem)
+              const delIndex = guide.splice(guide.length - 1, 1)[0]
+              const delItem = this.evil(`function(){ return this.rootData[0].children.splice(${delIndex}, 1) }`).call(this)
+              console.log('del2', delIndex, delItem)
             }
           } else {
             // 无title，继续遍历children
@@ -535,14 +536,14 @@ export default {
                         }`).call(this, item)
               console.log('add', item)
             } else {
-              const target = `children[${guide.join('].children[')}]`
+              const addIndex = guide.splice(guide.length - 1, 1)[0]
+              console.log(addIndex)
               this.evil(`function(item){
-                          console.log('==2', item)
-                          if( this.rootData[0].${target}.children ) { 
-                            return this.rootData[0].${target}.children.splice(0, 0, item) 
+                          if( this.rootData[0].children ) { 
+                            return this.rootData[0].children.splice(${addIndex}, 0, item) 
                           } else {
-                            this.rootData[0].${target}.children = []
-                            return this.rootData[0].${target}.children.splice(0, 0, item) 
+                            this.rootData[0].children = []
+                            return this.rootData[0].children.splice(${addIndex}, 0, item) 
                           } 
                         }`).call(this, item)
               console.log('add', item)
