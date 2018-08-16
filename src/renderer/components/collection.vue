@@ -1,9 +1,7 @@
 <template>
   <div class="collection">
-    <Layout class="container">
-      <Tree :data="rootData"
-            :render="renderChildren"></Tree>
-    </Layout>
+    <Tree :data="rootData"
+          :render="renderChildren"></Tree>
   </div>
 </template>
 
@@ -99,20 +97,47 @@ export default {
      */
     setChildren (content, guide) {
       let child = []
-      content.map((item, key) => {
+      let bodyLevelItem = {
+        title: 'bodyParent',
+        level: 'bodyParent',
+        guide: null,
+        children: []
+      }
+      content.map((item, index) => {
         let _guide = [...guide]
-        // 当前children的导引
-        _guide.push(key)
-        child.push({
-          title: item.title,
-          expand: true,
-          guide: _guide,
-          id: item.id,
-          level: item.level,
-          children: item.content ? this.setChildren(item.content, _guide) : null,
-          idEnd: item.content === undefined || item.content.length === 0
-        })
+        if (item.level === 'body') {
+          console.log(item)
+          bodyLevelItem.children.push({
+            title: item.title,
+            expand: true,
+            guide: null,
+            id: item.id,
+            level: item.level,
+            children: null,
+            idEnd: true
+          })
+        } else {
+          // 当前children的导引
+          _guide.push(index)
+          console.log('_guide', _guide, index)
+          child.push({
+            title: item.title,
+            expand: true,
+            guide: _guide,
+            id: item.id,
+            level: item.level,
+            children: item.content ? this.setChildren(item.content, _guide) : null,
+            idEnd: item.content === undefined || item.content.length === 0
+          })
+        }
       })
+      if (bodyLevelItem.children.length) {
+        let _guide = [...guide]
+        _guide.push(content.length)
+        console.log('ll==', _guide)
+        bodyLevelItem.guide = _guide
+        child.push(bodyLevelItem)
+      }
       return child
     },
     /**
@@ -149,17 +174,46 @@ export default {
                   marginRight: '3px'
                 }
               }),
-              h('Tag',
-                {
-                  on: {
-                    'on-close': (e) => {
-                      this.remove(data)
-                    }
-                  },
-                  props: Object.assign({}, data.level === 'catalog' ? this.catalogTagProps : this.bodyTagProps)
-                }, data.title)
+              this.setTags(h, data)
             ])
         ])
+    },
+    setTags (h, data) {
+      if (data.level === 'catalog') {
+        return h('Tag',
+          {
+            on: {
+              'on-close': (e) => {
+                this.remove(data)
+              }
+            },
+            props: Object.assign({}, data.level === 'catalog' ? this.catalogTagProps : this.bodyTagProps)
+          }, data.title)
+      } else {
+        let bodyLevelChildren = []
+        data.children.map(item => {
+          bodyLevelChildren.push(
+            h('Tag',
+              {
+                on: {
+                  'on-close': (e) => {
+                    this.remove(item)
+                  }
+                },
+                props: Object.assign({}, item.level === 'catalog' ? this.catalogTagProps : this.bodyTagProps)
+              }, item.title))
+        })
+        return h('div',
+          {
+            style: {
+              width: '100%',
+              display: 'flex',
+              'flex-direction': 'row',
+              'align-items': 'center',
+              'flex-wrap': 'wrap'
+            }
+          }, bodyLevelChildren)
+      }
     },
     /**
      * 添加子节点
@@ -272,7 +326,7 @@ export default {
         base: this.collection
       })
       this.collection = newlyCollection
-      console.log(add, del)
+      console.log(del, add)
       // 生成 delRootData
       this.renderRoot(del, 'delRootData')
       // 生成 addRootData
@@ -318,12 +372,42 @@ export default {
              * guide = [0,2] => this.rootData[0].children[0].children[2].guide
              * this.rootData[0] 为根节点。
              */
-            if (guide.length > 1) {
-              const addIndex = guide.splice(guide.length - 1, 1)[0]
-              console.log(addIndex)
-              const target = `children[${guide.join('].children[')}]`
-              console.log(`this.rootData[0].${target}.children`)
-              this.evil(`function(item){
+            console.log('===', item)
+            if (item.level === 'bodyParent') {
+              if (guide.length > 1) {
+                const addIndex = guide.splice(guide.length - 1, 1)[0]
+                console.log(addIndex, item.guide)
+                const target = `children[${guide.join('].children[')}]`
+                console.log(this.rootData[0], `this.rootData[0].${target}`)
+                this.evil(`function(item){
+                          if( this.rootData[0].${target}.children ) {
+                            return this.rootData[0].${target}.children[0].children.push(...item.children)
+                          } else {
+                            this.rootData[0].${target}.children = []
+                            return this.rootData[0].${target}.children[0].children.push(...item.children)
+                          } 
+                        }`).call(this, item)
+                console.log('add-body1', item)
+              } else {
+                const addIndex = guide.splice(guide.length - 1, 1)[0]
+                console.log(addIndex)
+                this.evil(`function(item){
+                          if( this.rootData[0].children ) { 
+                            return this.rootData[0].children[0].children.push(...item.children)
+                          } else {
+                            this.rootData[0].children = []
+                            return this.rootData[0].children[0].children.push(...item.children)
+                          } 
+                        }`).call(this, item)
+                console.log('add-body2', item)
+              }
+            } else {
+              if (guide.length > 1) {
+                const addIndex = guide.splice(guide.length - 1, 1)[0]
+                console.log(addIndex)
+                const target = `children[${guide.join('].children[')}]`
+                console.log(`this.rootData[0].${target}.children`)
+                this.evil(`function(item){
                           if( this.rootData[0].${target}.children ) { 
                             return this.rootData[0].${target}.children.splice(${addIndex}, 0, item) 
                           } else {
@@ -331,11 +415,11 @@ export default {
                             return this.rootData[0].${target}.children.splice(${addIndex}, 0, item) 
                           } 
                         }`).call(this, item)
-              console.log('add', item)
-            } else {
-              const addIndex = guide.splice(guide.length - 1, 1)[0]
-              console.log(addIndex)
-              this.evil(`function(item){
+                console.log('add', item)
+              } else {
+                const addIndex = guide.splice(guide.length - 1, 1)[0]
+                console.log(addIndex)
+                this.evil(`function(item){
                           if( this.rootData[0].children ) { 
                             return this.rootData[0].children.splice(${addIndex}, 0, item) 
                           } else {
@@ -343,7 +427,8 @@ export default {
                             return this.rootData[0].children.splice(${addIndex}, 0, item) 
                           } 
                         }`).call(this, item)
-              console.log('add', item)
+                console.log('add', item)
+              }
             }
           } else {
             if (item.children && item.children.length) {
