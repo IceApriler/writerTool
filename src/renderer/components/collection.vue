@@ -97,7 +97,6 @@ export default {
      */
     setChildren (content, guide) {
       let child = []
-      console.log('===start', content)
       content.map((item, key) => {
         let _guide = [...guide]
         // 当前children的导引
@@ -112,7 +111,6 @@ export default {
           idEnd: item.content === undefined || item.content.length === 0
         })
       })
-      console.log('===end', content)
       return child
     },
     /**
@@ -166,17 +164,19 @@ export default {
           }, data.title)
       } else {
         let detailsLevelChildren = []
-        data.title.split(' ').map(item => {
-          detailsLevelChildren.push(
-            h('Tag',
-              {
-                on: {
-                  'on-close': (e) => {
-                    this.remove(item)
-                  }
-                },
-                props: Object.assign({}, this.detailsTagProps)
-              }, item))
+        data.title.split(' ').map((item, index) => {
+          if (item.length) {
+            detailsLevelChildren.push(
+              h('Tag',
+                {
+                  on: {
+                    'on-close': (e) => {
+                      this.removeDetail(item, index, data)
+                    }
+                  },
+                  props: Object.assign({}, this.detailsTagProps)
+                }, item))
+          }
         })
         return h('div',
           {
@@ -213,6 +213,30 @@ export default {
           let guide = this.getGuide(data.guide)
           this.$db.db('data').get(`${guide.parent}.content`).remove((item, index) => {
             return guide.index === index
+          }).write()
+          // 更新节点
+          this.renderContent()
+        }
+      })
+    },
+    /**
+     * 移除子节点的某detail
+     */
+    removeDetail (detail, key, data) {
+      this.normalModal('删除', `你确定要删除 “${detail}” 吗？`).then(res => {
+        if (res.status) {
+          let guide = this.getGuide(data.guide)
+          let deta = []
+          data.title.split(' ').map((item, index) => {
+            if (item.length && index !== key) {
+              deta.push(item)
+            }
+          })
+          deta = deta.join(' ')
+          this.$db.db('data').get(`${guide.parent}.content`).map((item, index) => {
+            if (guide.index === index) {
+              item.title = deta
+            }
           }).write()
           // 更新节点
           this.renderContent()
