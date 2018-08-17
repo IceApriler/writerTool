@@ -52,7 +52,7 @@ export default {
      * content <Array>
      */
     renderRoot (collection, rootData = 'rootData') {
-      let { title, content, id } = collection
+      let { title, content, id, level } = collection
       let guide = []
       this[rootData] = [
         {
@@ -60,6 +60,7 @@ export default {
           expand: true,
           guide: guide,
           id: id,
+          level: level,
           /**
            * root <Array>：树的根节点
            * node <Object>：当前节点
@@ -141,6 +142,7 @@ export default {
           expand: true,
           guide: _guide,
           id: item.id,
+          level: item.level,
           children: item.content ? this.setChildren(item.content, _guide) : null,
           idEnd: item.content === undefined || item.content.length === 0
         })
@@ -245,36 +247,34 @@ export default {
      * 添加子节点
      */
     append (data) {
-      this.inputModal('新增').then(res => {
-        if (!res.status) {
-          return false
-        } else if (res.status && !res.value.trim()) {
-          this.$Message.error({
-            content: '写入失败！内容不能为空',
-            duration: 5,
-            closable: true
-          })
-          return false
-        }
-        // const children = data.children || []
-        // guide 为当前数据所在路径
-        let guide = this.getGuide(data.guide)
-        this.$db.db('data').get(guide.target).defaults({ content: [] }).get('content').push({
-          id: this.$sid.generate(),
-          title: res.value,
-          level: 'catalog'
-        }).write()
-        // 更新节点
-        this.renderContent()
-        // data.idEnd = false
-        // children.push({
-        //   title: res.value,
-        //   expand: true,
-        //   guide: [...data.guide, children.length],
-        //   idEnd: true
-        // })
-        // this.$set(data, 'children', children)
-      })
+      console.log(data)
+      const guide = this.getGuide(data.guide)
+      let content = this.$db.db('data').get(guide.target).defaults({ content: [] }).get('content').value()
+      if ((content[0] && content[0].level === 'details') || data.level === 'details') {
+        console.log('can not append')
+      } else {
+        this.inputModal('新增').then(res => {
+          if (!res.status) {
+            return false
+          } else if (res.status && !res.value.trim()) {
+            this.$Message.error({
+              content: '写入失败！内容不能为空',
+              duration: 5,
+              closable: true
+            })
+            return false
+          }
+          // guide 为当前数据所在路径
+          let guide = this.getGuide(data.guide)
+          this.$db.db('data').get(guide.target).defaults({ content: [] }).get('content').push({
+            id: this.$sid.generate(),
+            title: res.value,
+            level: 'catalog'
+          }).write()
+          // 更新节点
+          this.renderContent()
+        })
+      }
     },
     /**
      * 移除子节点

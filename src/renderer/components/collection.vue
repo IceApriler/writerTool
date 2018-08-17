@@ -136,6 +136,12 @@ export default {
                     this.tagClick(data)
                   }
                 }
+              },
+              style: {
+                width: '100%',
+                display: 'flex',
+                'flex-direction': 'row',
+                'align-items': 'center'
               }
             },
             [
@@ -155,11 +161,6 @@ export default {
       if (data.level === 'catalog') {
         return h('Tag',
           {
-            on: {
-              'on-close': (e) => {
-                this.remove(data)
-              }
-            },
             props: Object.assign({}, data.level === 'catalog' ? this.catalogTagProps : this.detailsTagProps)
           }, data.title)
       } else {
@@ -181,7 +182,6 @@ export default {
         return h('div',
           {
             style: {
-              width: '100%',
               display: 'flex',
               'flex-direction': 'row',
               'align-items': 'center',
@@ -249,14 +249,16 @@ export default {
     pushDetails (data) {
       const guide = this.getGuide(data.guide)
       let content = this.$db.db('data').get(guide.target).defaults({ content: [] }).get('content').value()
-      if (content[0]) {
+      if (!content[0]) {
+        this.append(data)
+      } else if (content[0].level === 'details') {
         content[0].title += ` ${this.selectText}`
         // 更新数据和节点
         this.$db.db('data').set(`${guide.target}.content`, content).write()
         // 更新节点
         this.renderContent()
       } else {
-        this.append(data)
+        console.log('can not pushDetails')
       }
     },
     /**

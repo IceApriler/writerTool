@@ -38,7 +38,7 @@
           <router-link to="/dashboard/collection">
             <MenuItem name="collection">
             <Icon type="logo-buffer" />
-            <span>收集</span>
+            <span>收藏夹</span>
             </MenuItem>
           </router-link>
           <router-link to="/dashboard/demo">
