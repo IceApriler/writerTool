@@ -97,47 +97,20 @@ export default {
      */
     setChildren (content, guide) {
       let child = []
-      let bodyLevelItem = {
-        title: 'bodyParent',
-        level: 'bodyParent',
-        guide: null,
-        children: []
-      }
-      content.map((item, index) => {
+      content.map((item, key) => {
         let _guide = [...guide]
-        if (item.level === 'body') {
-          console.log(item)
-          bodyLevelItem.children.push({
-            title: item.title,
-            expand: true,
-            guide: null,
-            id: item.id,
-            level: item.level,
-            children: null,
-            idEnd: true
-          })
-        } else {
-          // 当前children的导引
-          _guide.push(index)
-          console.log('_guide', _guide, index)
-          child.push({
-            title: item.title,
-            expand: true,
-            guide: _guide,
-            id: item.id,
-            level: item.level,
-            children: item.content ? this.setChildren(item.content, _guide) : null,
-            idEnd: item.content === undefined || item.content.length === 0
-          })
-        }
+        // 当前children的导引
+        _guide.push(key)
+        child.push({
+          title: item.title,
+          expand: true,
+          guide: _guide,
+          id: item.id,
+          level: item.level,
+          children: item.content ? this.setChildren(item.content, _guide) : null,
+          idEnd: item.content === undefined || item.content.length === 0
+        })
       })
-      if (bodyLevelItem.children.length) {
-        let _guide = [...guide]
-        _guide.push(content.length)
-        console.log('ll==', _guide)
-        bodyLevelItem.guide = _guide
-        child.push(bodyLevelItem)
-      }
       return child
     },
     /**
@@ -245,12 +218,28 @@ export default {
       })
     },
     /**
+     * 追加内容
+     */
+    pushBody (data) {
+      const guide = this.getGuide(data.guide)
+      let content = this.$db.db('data').get(guide.target).defaults({ content: [] }).get('content').value()
+      if (content[0]) {
+        content[0].title += ` ${this.selectText}`
+        // 更新数据和节点
+        this.$db.db('data').set(`${guide.target}.content`, content).write()
+        // 更新节点
+        this.renderContent()
+      } else {
+        this.append(data)
+      }
+    },
+    /**
      * 点击tag
      */
     tagClick (data) {
       // 有选中文本
       if (this.selectText.length) {
-        this.append(data)
+        this.pushBody(data, this.selectText)
       }
     },
     /**
