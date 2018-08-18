@@ -250,8 +250,10 @@ export default {
       console.log(data)
       const guide = this.getGuide(data.guide)
       let content = this.$db.db('data').get(guide.target).defaults({ content: [] }).get('content').value()
-      if ((content[0] && content[0].level === 'details') || data.level === 'details') {
+      // 若即将添加子节点的level为details，或者其拥有有子节点、且子节点的level为details，则不支持添加。
+      if (data.level === 'details' || (content[0] && content[0].level === 'details')) {
         console.log('can not append')
+        this.$Message.error('不支持添加目录！')
       } else {
         this.inputModal('新增').then(res => {
           if (!res.status) {
@@ -317,19 +319,30 @@ export default {
      */
     move (targetData) {
       console.log(this.moveTagData, targetData)
-      const moveGuide = this.getGuide(this.moveTagData.guide)
-      const targetGuide = this.getGuide(targetData.guide)
-      // 提取数据
-      const moveData = this.$db.db('data').get(`${moveGuide.target}`).value()
-      // 复制粘贴数据
-      this.$db.db('data').get(`${targetGuide.target}`).defaults({ content: [] }).get('content').push(moveData).write()
-      // 删除旧数据，完成移动
-      this.$db.db('data').get(`${moveGuide.parent}.content`).remove((item, index) => {
-        return moveGuide.index === index
-      }).write()
-      // 更新节点
-      this.renderContent()
-      this.cancelMove()
+      // 若目标的level是details，直接拒绝移动
+      if (targetData.level === 'details') {
+        this.$Message.error('不支持该移动操作！')
+      } else {
+        // 继续判断目标是否有下级子节点，若有子节点且level为details，直接拒绝移动
+        // 或者若是子节点的level为catalog，且移动的节点的level为details，也直接拒绝移动
+        if (targetData.children && targetData.children[0] && (targetData.children[0].level === 'details' || (targetData.children[0].level === 'catalog' && this.moveTagData.level === 'details'))) {
+          this.$Message.error('不支持该移动操作！')
+        } else {
+          const moveGuide = this.getGuide(this.moveTagData.guide)
+          const targetGuide = this.getGuide(targetData.guide)
+          // 提取数据
+          const moveData = this.$db.db('data').get(`${moveGuide.target}`).value()
+          // 复制粘贴数据
+          this.$db.db('data').get(`${targetGuide.target}`).defaults({ content: [] }).get('content').push(moveData).write()
+          // 删除旧数据，完成移动
+          this.$db.db('data').get(`${moveGuide.parent}.content`).remove((item, index) => {
+            return moveGuide.index === index
+          }).write()
+          // 更新节点
+          this.renderContent()
+          this.cancelMove()
+        }
+      }
     },
     /**
      * 修改title
@@ -587,6 +600,11 @@ export default {
   min-height: 100vh;
   .container {
     padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    overflow-x: scroll;
   }
 }
 </style>
