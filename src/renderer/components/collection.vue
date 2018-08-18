@@ -249,9 +249,11 @@ export default {
     pushDetails (data) {
       const guide = this.getGuide(data.guide)
       let content = this.$db.db('data').get(guide.target).defaults({ content: [] }).get('content').value()
+      // 若即将追加内容的节点无子节点，则允许添加新节点
       if (!content[0]) {
         this.append(data)
       } else if (content[0].level === 'details') {
+        // 若即将追加内容的节点有子节点，且子节点的level为details，则允许追加内容
         content[0].title += ` ${this.selectText}`
         // 更新数据和节点
         this.$db.db('data').set(`${guide.target}.content`, content).write()
@@ -259,6 +261,7 @@ export default {
         this.renderContent()
       } else {
         console.log('can not pushDetails')
+        this.$Message.error('不支持收藏内容！')
       }
     },
     /**
