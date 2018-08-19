@@ -7,7 +7,7 @@
         <span>WriterTool</span>
       </div>
       <div class="intoduction">
-        <span>一款基于Electron的的阅读工具</span>
+        <span>一款基于Electron的的作家工具</span>
       </div>
       <router-link class="btn-box"
                    to="/dashboard/bookList">

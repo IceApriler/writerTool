@@ -41,12 +41,12 @@
             <span>收藏夹</span>
             </MenuItem>
           </router-link>
-          <router-link to="/dashboard/demo">
+          <!-- <router-link to="/dashboard/demo">
             <MenuItem name="demo">
             <Icon type="android-settings"></Icon>
             <span>demo</span>
             </MenuItem>
-          </router-link>
+          </router-link> -->
         </Menu>
       </Sider>
       <Layout class="content"
