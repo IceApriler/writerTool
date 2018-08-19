@@ -351,12 +351,20 @@ export default {
       const guide = this.getGuide(data.guide)
       this.value = this.$db.db('data').get(`${guide.target}.title`).value()
       this.inputModal('修改').then(res => {
-        if (res.status) {
-          // 更新数据和节点
-          this.$db.db('data').set(`${guide.target}.title`, res.value).write()
-          // 更新节点
-          this.renderContent()
+        if (!res.status) {
+          return false
+        } else if (res.status && !res.value.trim()) {
+          this.$Message.error({
+            content: '写入失败！内容不能为空',
+            duration: 5,
+            closable: true
+          })
+          return false
         }
+        // 更新数据和节点
+        this.$db.db('data').set(`${guide.target}.title`, res.value).write()
+        // 更新节点
+        this.renderContent()
       })
     },
     /**
@@ -499,25 +507,30 @@ export default {
           // 这里需要考虑的是，用户del和update数据时的情况。
           // del是直接del一个数组中的某一项，所以在delRootData中的表现是某数组新增了一项。
           if (item.title) {
-            // 若有title则直接删除
             const guide = [...item.guide]
             /**
              * guide = [0] => this.rootData[0].children[0].guide
              * guide = [0,2] => this.rootData[0].children[0].children[2].guide
              * this.rootData[0] 为根节点。
              */
-            if (guide.length > 1) {
-              const delIndex = guide.splice(guide.length - 1, 1)[0]
-              const target = `children[${guide.join('].children[')}]`
-              const delItem = this.evil(`function(){ return this.rootData[0].${target}.children.splice(${delIndex}, 1) }`).call(this)
-              console.log('del1', delIndex, delItem)
+            if (item.id) {
+              // 若有title，且有id，则直接删除
+              if (guide.length > 1) {
+                const delIndex = guide.splice(guide.length - 1, 1)[0]
+                const target = `children[${guide.join('].children[')}]`
+                const delItem = this.evil(`function(){ return this.rootData[0].${target}.children.splice(${delIndex}, 1) }`).call(this)
+                console.log('del1', delIndex, delItem)
+              } else {
+                const delIndex = guide.splice(guide.length - 1, 1)[0]
+                const delItem = this.evil(`function(){ return this.rootData[0].children.splice(${delIndex}, 1) }`).call(this)
+                console.log('del2', delIndex, delItem)
+              }
             } else {
-              const delIndex = guide.splice(guide.length - 1, 1)[0]
-              const delItem = this.evil(`function(){ return this.rootData[0].children.splice(${delIndex}, 1) }`).call(this)
-              console.log('del2', delIndex, delItem)
+              // 若有title，无id，则无需删除，适用于更新title的情况
+              console.log('del3')
             }
           } else {
-            // 无title，继续遍历children
+            // 无title，有继续遍历children
             if (item.children && item.children.length) {
               delTheItem(item.children)
             }
@@ -527,19 +540,22 @@ export default {
       const addTheItem = (data) => {
         data.map(item => {
           if (item.title) {
-            // 若有title则直接add
             const guide = [...item.guide]
             /**
              * guide = [0] => this.rootData[0].children[0].guide
              * guide = [0,2] => this.rootData[0].children[0].children[2].guide
              * this.rootData[0] 为根节点。
              */
-            if (guide.length > 1) {
-              const addIndex = guide.splice(guide.length - 1, 1)[0]
-              console.log(addIndex)
-              const target = `children[${guide.join('].children[')}]`
-              console.log(`this.rootData[0].${target}.children`)
-              this.evil(`function(item){
+            console.log('addTheItem', item)
+            // item.children && item.children.length
+            if (item.id) {
+              // 若有title，且有id，有则直接add
+              if (guide.length > 1) {
+                const addIndex = guide.splice(guide.length - 1, 1)[0]
+                console.log(addIndex)
+                const target = `children[${guide.join('].children[')}]`
+                console.log(`this.rootData[0].${target}.children`)
+                this.evil(`function(item){
                           if( this.rootData[0].${target}.children ) { 
                             return this.rootData[0].${target}.children.splice(${addIndex}, 0, item) 
                           } else {
@@ -547,11 +563,11 @@ export default {
                             return this.rootData[0].${target}.children.splice(${addIndex}, 0, item) 
                           } 
                         }`).call(this, item)
-              console.log('add', item)
-            } else {
-              const addIndex = guide.splice(guide.length - 1, 1)[0]
-              console.log(addIndex)
-              this.evil(`function(item){
+                console.log('add', item)
+              } else {
+                const addIndex = guide.splice(guide.length - 1, 1)[0]
+                console.log(addIndex)
+                this.evil(`function(item){
                           if( this.rootData[0].children ) { 
                             return this.rootData[0].children.splice(${addIndex}, 0, item) 
                           } else {
@@ -559,7 +575,16 @@ export default {
                             return this.rootData[0].children.splice(${addIndex}, 0, item) 
                           } 
                         }`).call(this, item)
-              console.log('add', item)
+                console.log('add', item)
+              }
+            } else {
+              // 若有title，无id，则只更新title, 适用于更新title的情况
+              const target = `children[${guide.join('].children[')}]`
+              console.log(`this.rootData[0].${target}`)
+              this.evil(`function(item){
+                          this.rootData[0].${target}.title = item.title
+                        }`).call(this, item)
+              console.log('updateTitle', item.title)
             }
           } else {
             if (item.children && item.children.length) {

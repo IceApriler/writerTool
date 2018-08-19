@@ -221,6 +221,7 @@ export default {
     },
     /**
      * 移除子节点的某detail
+     * key为要移除detail的键
      */
     removeDetail (detail, key, data) {
       this.normalModal('删除', `你确定要删除 “${detail}” 吗？`).then(res => {
@@ -233,11 +234,19 @@ export default {
             }
           })
           deta = deta.join(' ')
-          this.$db.db('data').get(`${guide.parent}.content`).map((item, index) => {
-            if (guide.index === index) {
-              item.title = deta
-            }
-          }).write()
+          if (deta.trim()) {
+            // 若有值，则写入覆盖，即更新
+            this.$db.db('data').get(`${guide.parent}.content`).map((item, index) => {
+              if (guide.index === index) {
+                item.title = deta
+              }
+            }).write()
+          } else {
+            // 若为空，则表示已无数据，直接删除即可
+            this.$db.db('data').get(`${guide.parent}.content`).remove((item, index) => {
+              return guide.index === index
+            }).write()
+          }
           // 更新节点
           this.renderContent()
         }

@@ -60,67 +60,168 @@
     "title": "根目录",
     "content": [
       {
-        "id": "UznDKxsJm",
-        "title": "1",
+        "id": "OQica1PaK",
+        "title": "阅读采集2",
         "level": "catalog",
         "content": [
           {
-            "id": "53E_C7aqN",
-            "title": "花魁 个一夜间被 个一夜 花魁鱼幼薇",
-            "level": "details"
-          }
-        ]
-      },
-      {
-        "id": "CuwrRJnez",
-        "title": "2",
-        "level": "catalog",
-        "content": [
-          {
-            "id": "QIlPSkCgi",
-            "title": "2.2",
+            "id": "M9BsN2gsQ",
+            "title": "词语、短语、好句收集",
             "level": "catalog",
             "content": [
               {
-                "id": "Rpd2msD78",
-                "title": "个一夜间被 花魁鱼幼薇",
-                "level": "details"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "id": "w1s35drno",
-        "title": "3",
-        "level": "catalog",
-        "content": [
-          {
-            "id": "1I1lauKmM",
-            "title": "2.1",
-            "level": "catalog",
-            "content": [
-              {
-                "id": "9EwPOmIAp",
-                "title": "花魁 个一夜",
-                "level": "details"
-              }
-            ]
-          },
-          {
-            "id": "yV91oXNcf",
-            "title": "4.1",
-            "level": "catalog",
-            "content": [
-              {
-                "id": "EeKjGZZ7U",
-                "title": "d",
+                "id": "tz81jGObB",
+                "title": "神态(面部五官，表情)",
                 "level": "catalog",
                 "content": [
                   {
-                    "id": "z2_SvmruS",
-                    "title": "个一夜",
-                    "level": "details"
+                    "id": "IqOg2AMX5",
+                    "title": "表情",
+                    "level": "catalog",
+                    "content": [
+                      {
+                        "id": "A1E67x-HJ",
+                        "title": "笑",
+                        "level": "catalog",
+                        "content": []
+                      },
+                      {
+                        "id": "pc0ytXxGG",
+                        "title": "悲",
+                        "level": "catalog"
+                      },
+                      {
+                        "id": "Ssqbqr6XS",
+                        "title": "其他",
+                        "level": "catalog"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "hJsq1fnET",
+                    "title": "眼神",
+                    "level": "catalog"
+                  },
+                  {
+                    "id": "WBUOOHzEI",
+                    "title": "其他",
+                    "level": "catalog"
+                  }
+                ]
+              },
+              {
+                "id": "zyNYQpZ70",
+                "title": "心理",
+                "level": "catalog",
+                "content": [
+                  {
+                    "id": "0l3gApRuw",
+                    "title": "反应",
+                    "level": "catalog"
+                  },
+                  {
+                    "id": "fDp057oN1",
+                    "title": "感受",
+                    "level": "catalog"
+                  },
+                  {
+                    "id": "pJ6yTPamc",
+                    "title": "其他",
+                    "level": "catalog"
+                  }
+                ]
+              },
+              {
+                "id": "U040TnRz2",
+                "title": "动作(包含动词)",
+                "level": "catalog",
+                "content": [
+                  {
+                    "id": "sNoFhKIN0",
+                    "title": "言、说、道",
+                    "level": "catalog"
+                  },
+                  {
+                    "id": "1ZZhNrnrQ",
+                    "title": "攻击",
+                    "level": "catalog"
+                  },
+                  {
+                    "id": "ok0Gqcrad",
+                    "title": "防御",
+                    "level": "catalog"
+                  },
+                  {
+                    "id": "Svl0Gx_nj",
+                    "title": "中性",
+                    "level": "catalog"
+                  }
+                ]
+              },
+              {
+                "id": "PzKcOA08Z",
+                "title": "情绪",
+                "level": "catalog",
+                "content": [
+                  {
+                    "id": "pKpTfptDt",
+                    "title": "喜怒哀乐",
+                    "level": "catalog"
+                  }
+                ]
+              },
+              {
+                "id": "_bzagsVvL",
+                "title": "形象",
+                "level": "catalog",
+                "content": [
+                  {
+                    "id": "fv8gxeEx-",
+                    "title": "外貌",
+                    "level": "catalog"
+                  },
+                  {
+                    "id": "AsxxW47pb",
+                    "title": "衣着",
+                    "level": "catalog"
+                  },
+                  {
+                    "id": "li9ivYpH0",
+                    "title": "仪态，气势",
+                    "level": "catalog"
+                  }
+                ]
+              },
+              {
+                "id": "jAiy-p67k",
+                "title": "言语",
+                "level": "catalog",
+                "content": []
+              },
+              {
+                "id": "1lheSAKMh",
+                "title": "其他描写",
+                "level": "catalog",
+                "content": [
+                  {
+                    "id": "0xnJttSk4",
+                    "title": "写物",
+                    "level": "catalog"
+                  },
+                  {
+                    "id": "v1gtXNDSn",
+                    "title": "写景",
+                    "level": "catalog"
+                  },
+                  {
+                    "id": "euWTv8eXL",
+                    "title": "战斗",
+                    "level": "catalog"
+                  },
+                  {
+                    "id": "8IMV6Htzm",
+                    "title": "声音",
+                    "level": "catalog"
                   }
                 ]
               }
@@ -129,16 +230,10 @@
         ]
       },
       {
-        "id": "PaBRjnsnH",
-        "title": "4",
+        "id": "tQmTAr0kx",
+        "title": "灵感速记",
         "level": "catalog",
-        "content": [
-          {
-            "id": "gjYklZENV",
-            "title": "",
-            "level": "details"
-          }
-        ]
+        "content": []
       }
     ]
   }
