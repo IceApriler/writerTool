@@ -47,6 +47,11 @@ export default new Router({
           path: 'collection',
           name: 'collection',
           component: require('@/pages/collection').default
+        },
+        {
+          path: 'about',
+          name: 'about',
+          component: require('@/pages/about').default
         }
       ]
     }

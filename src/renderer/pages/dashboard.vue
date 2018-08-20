@@ -41,6 +41,12 @@
             <span>收藏夹</span>
             </MenuItem>
           </router-link>
+          <router-link to="/dashboard/about">
+            <MenuItem name="about">
+            <Icon type="ios-leaf" />
+            <span>关于</span>
+            </MenuItem>
+          </router-link>
           <!-- <router-link to="/dashboard/demo">
             <MenuItem name="demo">
             <Icon type="android-settings"></Icon>
