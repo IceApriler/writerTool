@@ -112,7 +112,9 @@ export default {
         width: 500,
         onOk: () => {
           this.$db.deleteDB(item.fileName)
-          this.$db.db('data').get('bookList').removeById(item.id).write()
+          this.$db.db('data').get('bookList').remove((i) => {
+            return i.id === item.id
+          }).write()
           this.getBookList()
         }
       })
