@@ -2,9 +2,9 @@
 
 ## 描述
 
-一款为作家准备的生产力工具，支持 txt 阅读，支持收集优美词汇和优秀桥段，支持灵感速记，同时还支持对以上内容进行分门别类，并以树形图的形式进行预览。
+一款为作家准备的生产力工具，支持 txt 阅读、收集词汇和桥段、灵感速记，以及对以上内容进行分门别类，并以树形图的形式进行预览。
 
-A productivity tool for writers, supports txt reading, supports the collection of beautiful vocabulary and excellent bridges, supports inspiration shorthand, and also supports the classification of the above content, and previews in the form of a tree.
+A productivity tool for writers that supports txt reading, collecting vocabulary and bridges, inspirational shorthands, and categorizing the above and previewing them in a tree view.
 
 ## 特性
 
