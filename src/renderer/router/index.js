@@ -52,6 +52,11 @@ export default new Router({
           path: 'about',
           name: 'about',
           component: require('@/pages/about').default
+        },
+        {
+          path: 'donate',
+          name: 'donate',
+          component: require('@/pages/donate').default
         }
       ]
     }

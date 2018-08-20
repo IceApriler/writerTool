@@ -96,6 +96,7 @@ export default {
       `<span class="t">昵称：</span><span>四月、冰封四月、April</span>`,
       `<span class="t">城市：</span><span>北京 朝阳区</span>`,
       `<span class="t">职业：</span><span>前端工程师</span>`,
+      `<span class="t">爱好：</span><span>网文，写代码</span>`,
       `<span class="t">龙空ID：</span><span>冰封四月</span>`,
       `<span class="t">邮箱：</span><span>qimengjie@163.com</span>`,
       `<span class="t">官方聊天打屁群：</span><span>770848778</span>`

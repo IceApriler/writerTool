@@ -47,6 +47,12 @@
             <span>关于</span>
             </MenuItem>
           </router-link>
+          <router-link to="/dashboard/donate">
+            <MenuItem name="donate">
+            <Icon type="md-ribbon" />
+            <span>捐赠</span>
+            </MenuItem>
+          </router-link>
           <!-- <router-link to="/dashboard/demo">
             <MenuItem name="demo">
             <Icon type="android-settings"></Icon>
