@@ -4,11 +4,13 @@
     <Layout class="container">
       <Content class="bookList">
         <div class="waterfall"
+             :style="{backgroundColor: bgColorPicker, color: fontColorPicker, fontWeight: fontWeight}"
              ref="waterfall">
           <div class="inner"
                v-for="item in readerBooks">
             <div class="scroll">
               <div class="section"
+                   :style="{fontFamily: fontFamily, fontSize: fontSize + 'px'}"
                    v-for="section in item.sectionList"
                    v-if="item.sectionList.length">
                 <p v-for="(paragraph, p_i) in section.content">
@@ -38,13 +40,13 @@
             <li @click="bookCatelogToggle">
               <Icon type="md-reorder" />
             </li>
-            <li>
+            <!-- <li>
               <Icon type="md-expand"
                     v-if="true" />
               <Icon type="md-contract"
                     v-else />
-            </li>
-            <li>
+            </li> -->
+            <li @click="readSettingToggle">
               <Icon type="md-settings" />
             </li>
             <li @click="lastSection">
@@ -61,7 +63,7 @@
             <div class="title">目录</div>
             <div class="close"
                  @click="bookCatelogToggle">
-              <Icon type="close-round"></Icon>
+              <Icon type="md-close" />
             </div>
           </div>
           <Scroll class="scroll"
@@ -71,6 +73,60 @@
                   @click="newlySection(item)">{{item.title}}</li>
             </ul>
           </Scroll>
+        </content>
+        <content class="readSetting"
+                 v-show="showReadSetting">
+          <div class="header">
+            <div class="title">阅读设置</div>
+            <div class="close"
+                 @click="readSettingToggle">
+              <Icon type="md-close" />
+            </div>
+          </div>
+          <div class="settingBody">
+            <div class="setItem">
+              <div class="itemTitle">背景颜色</div>
+              <div>
+                <ColorPicker v-model="bgColorPicker"
+                             recommend />
+                <Button @click="bgColorPicker = '#E8D0B7'">默认</Button>
+              </div>
+            </div>
+            <div class="setItem">
+              <div class="itemTitle">字体颜色</div>
+              <div>
+                <ColorPicker v-model="fontColorPicker"
+                             recommend />
+                <Button @click="bgColorPicker = '#3A3C41'">默认</Button>
+              </div>
+            </div>
+            <div class="setItem">
+              <div class="itemTitle">字体类型</div>
+              <ButtonGroup>
+                <Button @click="selectFontFamily('MicroSoft YaHei,STHeiti')">黑体</Button>
+                <Button @click="selectFontFamily('NSimSun,FangSong,STFangsong,STSong')">宋体</Button>
+                <Button @click="selectFontFamily('KaiTi,STKaiti')">楷体</Button>
+                <Button @click="selectFontFamily('serif')">serif</Button>
+                <Button @click="selectFontFamily('')">本机默认</Button>
+              </ButtonGroup>
+            </div>
+            <div class="setItem">
+              <div class="itemTitle">字体大小</div>
+              <div style="width: 50%">
+                <Slider v-model="fontSize"
+                        :min="10"
+                        :max="26"
+                        :step="1"></Slider>
+              </div>
+            </div>
+            <div class="setItem">
+              <div class="itemTitle">字体加粗</div>
+              <ButtonGroup>
+                <Button @click="selectFontWeight(400)">400</Button>
+                <Button @click="selectFontWeight(600)">600</Button>
+              </ButtonGroup>
+            </div>
+          </div>
         </content>
       </div>
     </Layout>
@@ -96,7 +152,13 @@ export default {
       showBookCatelog: false,
       selectText: '',
       showDragbleBox: false,
-      rootData: []
+      rootData: [],
+      showReadSetting: false,
+      bgColorPicker: '#E8D0B7',
+      fontColorPicker: '#3A3C41',
+      fontFamily: 'MicroSoft YaHei,STHeiti',
+      fontSize: 18,
+      fontWeight: 400
     }
   },
   computed: {
@@ -181,10 +243,31 @@ export default {
       })
     },
     /**
+     * 阅读设置
+     */
+    readSettingToggle () {
+      this.showReadSetting = !this.showReadSetting
+      this.showBookCatelog = false
+    },
+    /**
+     * 选择字体
+     */
+    selectFontFamily (fontFamily) {
+      console.log(fontFamily)
+      this.fontFamily = fontFamily
+    },
+    /**
+     * 选择字体加粗
+     */
+    selectFontWeight (fontWeight) {
+      this.fontWeight = fontWeight
+    },
+    /**
      * 切换目录
      */
     bookCatelogToggle () {
       this.showBookCatelog = !this.showBookCatelog
+      this.showReadSetting = false
     },
     /**
      * 获取目录
@@ -392,7 +475,6 @@ export default {
               padding: 16px;
               p {
                 text-indent: 2em;
-                font-size: 17px;
                 line-height: 30px;
                 padding: 5px 0;
                 &:first-child {
@@ -412,13 +494,11 @@ export default {
         min-width: 500px;
         background: #e8d0b7;
         .inner {
-          font-size: 17px;
           .section {
             padding: 16px;
             p {
               text-indent: 2em;
-              font-size: 17px;
-              line-height: 30px;
+              line-height: 1.6em;
               padding: 5px 0;
               position: relative;
               &:first-child {
@@ -546,6 +626,50 @@ export default {
                 color: #cc2931;
                 transition: color 0.2s ease;
               }
+            }
+          }
+        }
+      }
+      .readSetting {
+        position: absolute;
+        left: 50px;
+        top: 0;
+        width: 500px;
+        background-color: #fff;
+        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+        .header {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          padding: 5px 10px 5px 20px;
+          .title {
+            font-size: 16px;
+            border-bottom: 2px solid #ca2e39;
+          }
+          .close {
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            font-size: 20px;
+            cursor: pointer;
+          }
+        }
+        .settingBody {
+          padding: 10px 20px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          .setItem {
+            width: 100%;
+            height: 40px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            font-size: 13px;
+            .itemTitle {
+              width: 80px;
             }
           }
         }

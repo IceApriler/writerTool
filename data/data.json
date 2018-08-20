@@ -7,7 +7,7 @@
       "bookName": "牧神记",
       "bookFullName": "牧神记.txt",
       "path": "/Users/april/Downloads/牧神记.txt",
-      "index": 0,
+      "index": 1,
       "characterNumber": 3053663
     },
     {
@@ -16,7 +16,7 @@
       "bookName": "《九鼎记》（校对版全本）作者：我吃西红柿",
       "bookFullName": "《九鼎记》（校对版全本）作者：我吃西红柿.txt",
       "path": "/Users/april/myFile/novel/《九鼎记》（校对版全本）作者：我吃西红柿.txt",
-      "index": 0,
+      "index": 1,
       "characterNumber": 2109852
     }
   ],
@@ -64,12 +64,20 @@
                   {
                     "id": "hJsq1fnET",
                     "title": "眼神",
-                    "level": "catalog"
+                    "level": "catalog",
+                    "content": []
                   },
                   {
                     "id": "WBUOOHzEI",
                     "title": "其他",
-                    "level": "catalog"
+                    "level": "catalog",
+                    "content": [
+                      {
+                        "id": "kywtWV4wz",
+                        "title": "摇了摇头",
+                        "level": "details"
+                      }
+                    ]
                   }
                 ]
               },
@@ -175,7 +183,14 @@
                   {
                     "id": "v1gtXNDSn",
                     "title": "写景",
-                    "level": "catalog"
+                    "level": "catalog",
+                    "content": [
+                      {
+                        "id": "mefxlplWQ",
+                        "title": "黑暗降临",
+                        "level": "details"
+                      }
+                    ]
                   },
                   {
                     "id": "euWTv8eXL",
@@ -195,9 +210,29 @@
       },
       {
         "id": "tQmTAr0kx",
-        "title": "灵感速记",
+        "title": "灵感速记test",
         "level": "catalog",
-        "content": []
+        "content": [
+          {
+            "id": "wgJa-OxNE",
+            "title": "enen",
+            "level": "catalog",
+            "content": [
+              {
+                "id": "s4E_h2uT1",
+                "title": "heheda",
+                "level": "catalog",
+                "content": [
+                  {
+                    "id": "PJLbzmPoS",
+                    "title": "test2",
+                    "level": "catalog"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       }
     ]
   }
