@@ -485,6 +485,7 @@ export default {
             font-size: 24px;
             text-align: center;
             cursor: pointer;
+            list-style: none;
           }
         }
       }
