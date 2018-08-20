@@ -177,15 +177,13 @@ export default {
       }).then(() => {
         this.cbid = item.id
         localStorage.setItem('currentBookId', item.id)
+        this.getBookCatelog()
       })
     },
     /**
      * 切换目录
      */
     bookCatelogToggle () {
-      if (!this.bookCatelog.length) {
-        this.getBookCatelog()
-      }
       this.showBookCatelog = !this.showBookCatelog
     },
     /**
@@ -200,8 +198,12 @@ export default {
      * 获取上一章
      */
     lastSection () {
-      // 下一页
-      this.index = this.currentBook.index - 1
+      const index = this.currentBook.index - 1
+      if (!this.bookCatelog || index < 0 || index >= this.bookCatelog.length) {
+        return
+      }
+      // 上一页
+      this.index = index
       const section = this.$db.db(this.currentBook.fileName).get(`sections[${this.index}]`).value()
       this.newlyReaderBooksSection({
         id: this.currentBook.id,
@@ -217,8 +219,12 @@ export default {
      * 获取下一章
      */
     nextSection () {
+      const index = this.currentBook.index + 1
+      if (!this.bookCatelog || index < 0 || index >= this.bookCatelog.length) {
+        return
+      }
       // 下一页
-      this.index = this.currentBook.index + 1
+      this.index = index
       const section = this.$db.db(this.currentBook.fileName).get(`sections[${this.index}]`).value()
       this.newlyReaderBooksSection({
         id: this.currentBook.id,
