@@ -2,6 +2,22 @@
   <div class="about"
        ref="about">
     <div class="leftWrap">
+      <div class="title">关于作者</div>
+      <div>
+        <p class="content"
+           v-for="item in authorInfo"
+           v-html="item">
+        </p>
+      </div>
+      <div class="title">功能介绍</div>
+      <div>
+        <p class="content"
+           v-for="item in userGuide"
+           v-html="item">
+        </p>
+      </div>
+    </div>
+    <div class="rightWrap">
       <div class="title">版本历史</div>
       <Timeline>
         <TimelineItem v-for="item in updateLogs">
@@ -10,15 +26,6 @@
              v-for="con in item.content">{{con}}</p>
         </TimelineItem>
       </Timeline>
-    </div>
-    <div class="rightWrap">
-      <div class="title">关于作者</div>
-      <div>
-        <p class="content"
-           v-for="item in authorInfo"
-           v-html="item">
-        </p>
-      </div>
     </div>
   </div>
 </template>
@@ -30,7 +37,8 @@ export default {
   data () {
     return {
       updateLogs: [],
-      authorInfo: []
+      authorInfo: [],
+      userGuide: []
     }
   },
   computed: {
@@ -92,27 +100,57 @@ export default {
       `<span class="t">邮箱：</span><span>qimengjie@163.com</span>`,
       `<span class="t">官方聊天打屁群：</span><span>770848778</span>`
     ]
+    this.userGuide = [
+      `<li>支持导入 txt 格式的小说，并生成章节目录</li>`,
+      `<li>支持阅读小说，页面更加清爽</li>`,
+      `<li>支持强大的收藏夹功能，用来存储优美词汇、优秀桥段和灵感速记</li>`,
+      `<li>收藏夹支持以树形图的形式进行分门别类，浏览阅读更加直观优美。</li>`,
+      `<li>收藏夹支持目录和内容的新增、删除、移动和修改，操作更加灵活。</li>`,
+      `<li>writer-Tool 的功能完全离线，小说、用户数据和用户收藏夹内容，都存储在本地的 json 文件中，注重用户隐私。</li>`,
+      `<li>跨平台，支持 Windows、Mac 和 Linux 三个平台。</li>`
+    ]
   }
 }
 </script>
 <style lang="less">
 .about {
+  box-sizing: border-box;
   width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  padding: 50px 0;
   .leftWrap {
     box-sizing: border-box;
-    flex: 1;
+    flex: 1.2;
     height: 100%;
-    padding-left: 80px;
+    padding-left: 50px;
     .title {
       font-size: 24px;
       font-weight: 600;
       line-height: 50px;
-      margin-bottom: 20px;
+      margin: 10px 0;
+    }
+    .content {
+      font-size: 14px;
+      line-height: 30px;
+      .t {
+        font-size: 15px;
+        font-weight: 500;
+      }
+    }
+  }
+  .rightWrap {
+    box-sizing: border-box;
+    flex: 1;
+    height: 100vh;
+    padding-left: 60px;
+    overflow-y: scroll;
+    .title {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 50px;
+      margin: 10px 0;
     }
     .ivu-timeline-item-head {
       width: 15px;
@@ -125,26 +163,6 @@ export default {
     .content {
       font-size: 13px;
       line-height: 30px;
-    }
-  }
-  .rightWrap {
-    box-sizing: border-box;
-    flex: 1;
-    height: 100%;
-    padding-left: 50px;
-    .title {
-      font-size: 24px;
-      font-weight: 600;
-      line-height: 50px;
-      margin-bottom: 20px;
-    }
-    .content {
-      font-size: 14px;
-      line-height: 30px;
-      .t {
-        font-size: 15px;
-        font-weight: 500;
-      }
     }
   }
 }
