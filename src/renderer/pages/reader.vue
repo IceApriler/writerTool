@@ -16,6 +16,10 @@
                 <p v-for="(paragraph, p_i) in section.content">
                   <span :id="'paragraph'+p_i"></span>{{paragraph}}</p>
               </div>
+              <div class="nextSection"
+                   @click="nextSection">
+                <Icon type="ios-arrow-down" />
+              </div>
             </div>
           </div>
         </div>
@@ -494,6 +498,7 @@ export default {
         min-width: 500px;
         background: #e8d0b7;
         .inner {
+          box-shadow: 0 2px 8px rgba(204, 204, 204, 0.62);
           .section {
             padding: 16px;
             p {
@@ -518,6 +523,21 @@ export default {
                 color: #000;
               }
             }
+          }
+          .nextSection {
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            background-color: rgb(226, 186, 145);
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.2s ease-in 0s;
+          }
+          .nextSection:hover {
+            background-color: rgb(241, 224, 207);
+            color: #000;
+            transition: all 0.2s ease-in 0s;
           }
         }
       }
