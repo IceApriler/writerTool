@@ -1,7 +1,7 @@
 {
-  "name": "writer-tool",
-  "productName": "writer-tool",
-  "version": "0.2.0",
+  "name": "writerTool",
+  "productName": "writerTool",
+  "version": "v0.2.0",
   "author": "qimengjie@163.com",
   "description": "A productivity tool for writers that supports txt reading, collecting vocabulary and bridges, inspirational shorthands, and categorizing the above and previewing them in a tree view.",
   "license": null,

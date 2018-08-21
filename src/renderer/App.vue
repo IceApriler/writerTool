@@ -6,6 +6,6 @@
 
 <script>
 export default {
-  name: 'writer-tool'
+  name: 'writerTool'
 }
 </script>

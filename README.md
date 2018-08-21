@@ -13,7 +13,7 @@ A productivity tool for writers that supports txt reading, collecting vocabulary
 - 支持强大的收藏夹功能，用来存储优美词汇、优秀桥段和灵感速记。
 - 收藏夹支持以树形图的形式进行分门别类，浏览阅读更加直观优美。
 - 收藏夹支持目录和内容的新增、删除、移动和修改，操作更加灵活。
-- writer-Tool 的功能完全离线，小说、用户数据和用户收藏夹内容，都存储在本地的 json 文件中，注重用户隐私。
+- writerTool 的功能完全离线，小说、用户数据和用户收藏夹内容，都存储在本地的 json 文件中，注重用户隐私。
 - 跨平台，支持 Windows、Mac 和 Linux 三个平台。
 
 #### Build Setup

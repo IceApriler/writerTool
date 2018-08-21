@@ -79,7 +79,7 @@ export default {
       {
         time: '2018年7月23日',
         content: [
-          'writer-Tool项目正式开源至GitHub；',
+          'writerTool项目正式开源至GitHub；',
           '支持导入txt文本；',
           '支持小说分章；',
           '初步具备简单的阅读功能；'
@@ -88,7 +88,7 @@ export default {
       {
         time: '2018年7月14日',
         content: [
-          '诞生，writer-Tool项目创建。'
+          '诞生，writerTool项目创建。'
         ]
       }
     ]
@@ -107,7 +107,7 @@ export default {
       `<li>支持强大的收藏夹功能，用来存储优美词汇、优秀桥段和灵感速记</li>`,
       `<li>收藏夹支持以树形图的形式进行分门别类，浏览阅读更加直观优美。</li>`,
       `<li>收藏夹支持目录和内容的新增、删除、移动和修改，操作更加灵活。</li>`,
-      `<li>writer-Tool 的功能完全离线，小说、用户数据和用户收藏夹内容，都存储在本地的 json 文件中，注重用户隐私。</li>`,
+      `<li>writerTool 的功能完全离线，小说、用户数据和用户收藏夹内容，都存储在本地的 json 文件中，注重用户隐私。</li>`,
       `<li>跨平台，支持 Windows、Mac 和 Linux 三个平台。</li>`
     ]
   }
