@@ -1,6 +1,7 @@
 'use strict'
 
 process.env.NODE_ENV = 'production'
+process.env.DEBUG = 'electron-packager'
 
 const { say } = require('cfonts')
 const chalk = require('chalk')
