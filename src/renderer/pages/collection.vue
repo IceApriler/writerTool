@@ -2,8 +2,17 @@
   <div class="collection"
        ref="collection">
     <Layout class="container">
-      <Tree :data="rootData"
-            :render="renderChildren"></Tree>
+      <Tabs type="card"
+            class="tabs">
+        <TabPane label="总骨架">
+          <Tree :data="rootData"
+                :render="renderChildren"></Tree>
+        </TabPane>
+        <TabPane :label="item.title"
+                 v-for="item in previewTagList">
+
+        </TabPane>
+      </Tabs>
     </Layout>
   </div>
 </template>
@@ -26,7 +35,8 @@ export default {
       },
       showModal: false,
       value: '',
-      moveTagData: null
+      moveTagData: null,
+      previewTagList: []
     }
   },
   computed: {
@@ -112,7 +122,7 @@ export default {
                         type: 'primary'
                       }),
                       style: {
-                        width: '100px',
+                        width: '136px',
                         display: this.moveTagData ? 'none' : undefined
                       },
                       on: {
@@ -223,6 +233,7 @@ export default {
                   icon: 'ios-move'
                 }),
                 style: {
+                  marginRight: '8px',
                   display: this.moveTagData ? 'none' : undefined
                 },
                 on: {
@@ -238,6 +249,17 @@ export default {
                 },
                 on: {
                   click: () => { this.cancelMove() }
+                }
+              }),
+              h('Button', {
+                props: Object.assign({}, this.buttonProps, {
+                  icon: 'ios-redo-outline'
+                }),
+                style: {
+                  display: this.moveTagData ? 'none' : undefined
+                },
+                on: {
+                  click: () => { this.previewTagData(data) }
                 }
               })
             ])
@@ -343,6 +365,13 @@ export default {
           this.cancelMove()
         }
       }
+    },
+    /**
+     * 预览模式，预览某个tag
+     */
+    previewTagData (data) {
+      console.log(data)
+      this.previewTagList.push(data)
     },
     /**
      * 修改title
