@@ -186,7 +186,7 @@ export default {
      */
     // 文本分章处理
     separateSection (content) {
-      const reg = /第[0-9〇一二三四五六七八九十百千]{1,10}章/g
+      const reg = /第[0-9〇一二三四五六七八九十百千]{1,10}[章回]/g
       // 拼接上一次块操作遗留的字符串
       if (this.lastChapter.length) {
         content = this.lastChapter + content

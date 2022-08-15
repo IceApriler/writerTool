@@ -18,6 +18,15 @@
       "path": "/Users/april/myFile/novel/《九鼎记》（校对版全本）作者：我吃西红柿.txt",
       "index": 1,
       "characterNumber": 2109852
+    },
+    {
+      "id": "l2LcW53d0",
+      "fileName": 1587279821608,
+      "bookName": "天龙八部的副本",
+      "bookFullName": "天龙八部的副本.txt",
+      "path": "/Users/qimengjie/Downloads/金庸全集/天龙八部/天龙八部的副本.txt",
+      "index": 1,
+      "characterNumber": 1708373
     }
   ],
   "collection": {
@@ -52,12 +61,14 @@
                       {
                         "id": "pc0ytXxGG",
                         "title": "悲",
-                        "level": "catalog"
+                        "level": "catalog",
+                        "content": []
                       },
                       {
                         "id": "Ssqbqr6XS",
                         "title": "其他",
-                        "level": "catalog"
+                        "level": "catalog",
+                        "content": []
                       }
                     ]
                   },
@@ -71,13 +82,7 @@
                     "id": "WBUOOHzEI",
                     "title": "其他",
                     "level": "catalog",
-                    "content": [
-                      {
-                        "id": "kywtWV4wz",
-                        "title": "摇了摇头",
-                        "level": "details"
-                      }
-                    ]
+                    "content": []
                   }
                 ]
               },
